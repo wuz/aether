@@ -1,0 +1,100 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+#!/bin/sh
+<<\EOF
+<!--
+  Test
+- - -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>&lrm;</title>
+    <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320"/>
+    <style>
+        html {
+            background: #191b2a;
+            color: #191b2a;
+            font-family: monospace;
+        }
+        * {
+            text-indent: -9999px;
+        }
+        body {
+            text-align:center;
+            margin: 0;
+            padding:0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color:#eff0f6;
+            overflow:hidden;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            right: 0px;
+            display: flex;
+            justify-content: center; /* align horizontal */
+            align-items: center; /* align vertical */
+        }
+
+        div > * {
+            text-indent:0px;
+        }
+        a {
+            color: #eff0f6;
+            text-decoration: none;
+        }
+        pre {
+            text-align: left;
+        }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>setup.wuz.sh</h1>
+        <pre>
+Download and verify integrity with GnuPG
+> gpg --recv-keys 0xD2C4C74D8FAA96F5
+> curl https://setup.wuz.sh | gpg -o setup.wuz.sh
+
+Don't pipe to `sh` in the previous step -
+you don't know if the signature is valid
+or what the source code is doing.
+
+Inspect source code
+> less setup.wuz.sh
+
+Run
+> chmod +x setup.wuz.sh
+> ./setup.wuz.sh
+        </pre>
+    </div>
+  </body>
+</html>
+<!--
+EOF
+#!/bin/sh
+echo "boom"
+exit 0
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl4dRyYACgkQyqab/F7y
+TEA+Sg/8C4+cZfZmW0V3HO4uXsrFh3X2OEvrg1bm4+YIME0ImjFfVcfezklvQIOw
+DVfdn/GUxwRnTLQ2/UC8rHlRVSjIMUULWfz6laMfhzSIA6b9A6uHK2yjmag0bL6d
+hEghXQuV7VYGR2G/9n20uKECNgWZiIiAOYr8nufDLLDMe1pzj8+VAuK6D3sL145H
+IAk/Q3RjclxTaXYtYy2Y/xVObkuetnC/fBEkaMs5JmaqmwiVA6TrkyqZSnVIPFJA
+kgrsmtfUiHhIlTEzgKTWNJJnjxKxnKYLJ1Fp5K5HUU0C2/KLWnglYyzH8xpDe+z3
+JdzdtXdrWFP9AN4sm5JWUKmVspmcp5KVj+1t9JVlCyMBSpVRXqAOlxrnhO4fl3k7
+Dn27AGrLCd85dS6mByvpM16k4Fq/K6ufGh7K6PL3Q1WFr/mHpl+jo5x+X3VmhTNl
+5RMgKiHXuyQRosV5kN8WyQUGD/CD3J0XPdHittL5048LV2EfiR0jRnMLzi7GTbtU
+r6KDXV/XSwK/R7bttP1NXQNPMioCME1RAXakIG7nOpCTJbIvJIT06eVpD7TKrna+
+JHh/SDvXFIhcQiP4gGxe3r1iL1qY8Pf8N6YwBAQ1cw18I+qtSgsIS8QJTe0737hD
+CfQWr4H2B0OBOXR8IgBbYMFof+46cCXGBkugt43lQn88UurN5qw=
+=eSDx
+-----END PGP SIGNATURE-----
