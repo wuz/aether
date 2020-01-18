@@ -78,23 +78,120 @@ Run
 </html>
 <!--
 EOF
-#!/bin/sh
+
+#!/bin/bash
+
+
+#__/\\\______________/\\\_____________________________        
+# _\/\\\_____________\/\\\_____________________________       
+#  _\/\\\_____________\/\\\_____________________________      
+#   _\//\\\____/\\\____/\\\___/\\\____/\\\__/\\\\\\\\\\\_     
+#    __\//\\\__/\\\\\__/\\\___\/\\\___\/\\\_\///////\\\/__    
+#     ___\//\\\/\\\/\\\/\\\____\/\\\___\/\\\______/\\\/____   
+#      ____\//\\\\\\//\\\\\_____\/\\\___\/\\\____/\\\/______  
+#       _____\//\\\__\//\\\______\//\\\\\\\\\___/\\\\\\\\\\\_ 
+#        ______\///____\///________\/////////___\///////////__
+#
+
+# This is my[1] setup script - it's heavily adapted to my usecases
+# The code is CC0[2] so feel free to rework and reuse as you see fit.
+# Extensively inspired and reworked from: https://github.com/nnja/new-computer
+
+# Colorize
+
+# Set the colours you can use
+black=$(tput setaf 0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+magenta=$(tput setaf 5)
+cyan=$(tput setaf 6)
+white=$(tput setaf 7)
+
+# Resets the style
+reset=`tput sgr0`
+
+# Color-echo. Improved. [Thanks @joaocunha]
+# arg $1 = message
+# arg $2 = Color
+cecho() {
+  echo "${2}${1}${reset}"
+  return
+}
+
+echo ""
+cecho "###############################################" $red
+cecho "#        DON'T RUN CODE YOU FIND ON THE       #" $red
+cecho "#      INTERNET WITHOUT READING IT FIRST      #" $red
+cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" $red
+cecho "#                                             #" $red
+cecho "#          READ THIS CODE THOROUGHLY          #" $red
+cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" $red
+cecho "###############################################" $red
+echo ""
+
+# Set continue to false by default.
+CONTINUE=false
+
+echo ""
+cecho "Have you read through the script you're about to run and " $blue
+cecho "understood that it will make changes to your computer? (y/n)" $blue
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  CONTINUE=true
+fi
+
+if ! $CONTINUE; then
+  # Check if we're continuing and output a message if not
+  cecho "Please go read the script, it only takes a few minutes" $red
+  exit
+fi
+
+# Here we go.. ask for the administrator password upfront and run a
+# keep-alive to update existing `sudo` time stamp until script has finished
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+##############################
+# Prerequisite: Install Brew #
+##############################
+
+echo "Installing brew..."
+
+if test ! $(which brew)
+then
+	## Don't prompt for confirmation when installing homebrew
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
+fi
+
+# Latest brew, install brew cask
+brew upgrade
+brew update
+brew tap caskroom/cask
+
+##############################
+# Setup Keybase and GPG Keys #
+##############################
+
 echo "boom"
 exit 0
 
+# [1] - https://wuz.sh
+# [2] - https://creativecommons.org/share-your-work/public-domain/cc0/
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl4dSTwACgkQyqab/F7y
-TEDGshAAyb8CUAwgjmkUxngr7qfs+4h1j9suGUA5Pdt3YJUREXZvDCboodGE2r1N
-IPZK1S5UuohrX2AC1bUD5k822QAwp3QCQw29LsSPllN4eut3pF1xutlzFcdj9CBC
-J/kvQbxI4kG0pj8FoXY2QXV3RqlOTZvGPLLpoR2ySAZU3mXANgH0osDf6k6GozO/
-BdZUTT+wWpIdDQYuWshVDoqsZg47cPTq3bOpqZ1dP6GuEB5R9WIB39boQ5c3nKL6
-Yf+dgGBh2Cne8hlHEezTDl/K5ZcLMuKhiCvn7c45APhdFqa7Nv49Swn3Pj/zXkVd
-kr7xIDNy0SDZygAvuZLUQqfZ4saWE8pFEJKA2rsI5Pha/2UGRQBhz4AgVq33MDGt
-pb/sdiCS8a9AuWiEO6dxJ6B7ulq3gQH7qAGzraFCAuYnkNzo7jToVkXU+w8etw2F
-hGF/B3HfU1dmpe/DWeJJ4bzzc5dlFwSfy+Spgllzk/0LwZRIZysPNIkcklrsnprA
-5sgqkKPUPeCWvzr/UUqc2AmLJ3BkPoDJbzxPsxT6m+tEzVQrEB5kavSogtyQx2c6
-7OYidZEc1DQDHwOLN5PC5mUrA4Xgr+z+WMj97CoUu7xonHCDUs8qx7myHCXIW6Vc
-YqhIkY8U1gq+2fMvnkmP5F2h+4zzbL7MwDwRZr6OpnWdIsINbgg=
-=hlVl
+iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl4ihAoACgkQyqab/F7y
+TEA45hAAiiMufq+s0GXgPzELWPmGGa/q1Mr09xeM6BUJAPYW/HNy121V33bvYiVu
+UIzZVkOLqYPvC2M1Q9vAY/k/GKPaO0PEqANMcFKh9quKtypJiCK2FnOFOdjHdEiU
+0J8XwJn6Wj4QMNGeXO7woi4e0wdUNn7Rnsp7i22jTZYWPx95u1BNCsV4CNJI6yxR
+lQwC55DZ+r9RtosAjsLYx/QcS5MfQC4rMwK3nY0/HofO7HhblTEBT1l4hSxcosjn
+dNvxVle+bK9dnRrNxFABE2tyn7bRO35TOEn/p8T2HWaRA0g0hw9qG9hjVduUBMM7
+p5pfqWVXXN+yRV2U8rB6bkjooNTr5Zkm77xaGXz5qUBTPIyqnl8q0yj0pHdQYZB3
+aHBxzXsvBm1gPCEM+5f8aQ700A/SZge21IW2z13bF8zDKb1hW5WubnwJhks2xFu4
+8FyHLUJcsuDgCdC2EjjVvTcoS/M3hg6Gi8B5KI0/z2uGuMGOjMi/Vt8uISJMQad1
+hWkZ8gTXp+WPhFwvf1xBpKLZkzDERRwgO3ZsgtAw6YFHz0p2dPoooNRAfiSo8+db
+iUhyq8hQDji76/VnxV/fJjY20c+8PmMbGVWHvMOQhnUZAGjL4qyJer6qgR7nigHm
+7TXhsf2CSRBd5FC3qHNTYHOZycjsWEB7oNCcq+wJ2zT7FOMfYZ4=
+=8SOv
 -----END PGP SIGNATURE-----
