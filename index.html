@@ -81,7 +81,6 @@ EOF
 
 #!/bin/bash
 
-
 #__/\\\______________/\\\_____________________________        
 # _\/\\\_____________\/\\\_____________________________       
 #  _\/\\\_____________\/\\\_____________________________      
@@ -96,6 +95,10 @@ EOF
 # This is my[1] setup script - it's heavily adapted to my usecases
 # The code is CC0[2] so feel free to rework and reuse as you see fit.
 # Extensively inspired and reworked from: https://github.com/nnja/new-computer
+
+####################
+# Helper functions #
+####################
 
 # Colorize
 
@@ -120,11 +123,31 @@ cecho() {
   return
 }
 
+function cask_install() {
+  while read -r PROGRAM
+  do
+    brew cask install "$PROGRAM"
+  done
+}
+
+function brew_install() {
+  while read -r PROGRAM
+  do
+    brew install "$PROGRAM"
+  done
+}
+
 echo ""
 cecho "###############################################" $red
+cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" $red
+cecho "#                                             #" $red
+cecho "#---------------------------------------------#" $red
+cecho "#                                             #" $red
 cecho "#        DON'T RUN CODE YOU FIND ON THE       #" $red
 cecho "#      INTERNET WITHOUT READING IT FIRST      #" $red
 cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" $red
+cecho "#                                             #" $red
+cecho "#---------------------------------------------#" $red
 cecho "#                                             #" $red
 cecho "#          READ THIS CODE THOROUGHLY          #" $red
 cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" $red
@@ -159,16 +182,66 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Installing brew..."
 
-if test ! $(which brew)
+if test ! "$(command -v brew)"
 then
-	## Don't prompt for confirmation when installing homebrew
+  ## Don't prompt for confirmation when installing homebrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
 fi
 
-# Latest brew, install brew cask
+# Update brew, install cask
 brew upgrade
 brew update
 brew tap caskroom/cask
+
+#########################
+# Install brew packages #
+#########################
+
+echo "Installing brew packages..."
+
+brew_install << EOF
+  ack
+  git
+  exa
+  hub
+  go
+  tree
+  coreutils
+  moreutils
+  findutils
+  gnu-sed
+  gnu-time
+  gnupg
+  grep
+  hyperfine
+  jq
+  rename
+  shellcheck
+  the_silver_searcher
+  thefuck
+  ssh-copy-id
+  tmux
+  tmuxinator
+  todo-txt
+EOF
+
+#########################
+# Install cask packages #
+#########################
+
+echo "Installing cask packages..."
+
+cask_install << EOF
+  notion
+  docker
+  keybase
+  spotify
+  todotxt
+  visual-studio-code
+  bartender
+  firefox
+  tunnelblick
+EOF
 
 ##############################
 # Setup Keybase and GPG Keys #
@@ -181,17 +254,17 @@ exit 0
 # [2] - https://creativecommons.org/share-your-work/public-domain/cc0/
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl4ihAoACgkQyqab/F7y
-TEA45hAAiiMufq+s0GXgPzELWPmGGa/q1Mr09xeM6BUJAPYW/HNy121V33bvYiVu
-UIzZVkOLqYPvC2M1Q9vAY/k/GKPaO0PEqANMcFKh9quKtypJiCK2FnOFOdjHdEiU
-0J8XwJn6Wj4QMNGeXO7woi4e0wdUNn7Rnsp7i22jTZYWPx95u1BNCsV4CNJI6yxR
-lQwC55DZ+r9RtosAjsLYx/QcS5MfQC4rMwK3nY0/HofO7HhblTEBT1l4hSxcosjn
-dNvxVle+bK9dnRrNxFABE2tyn7bRO35TOEn/p8T2HWaRA0g0hw9qG9hjVduUBMM7
-p5pfqWVXXN+yRV2U8rB6bkjooNTr5Zkm77xaGXz5qUBTPIyqnl8q0yj0pHdQYZB3
-aHBxzXsvBm1gPCEM+5f8aQ700A/SZge21IW2z13bF8zDKb1hW5WubnwJhks2xFu4
-8FyHLUJcsuDgCdC2EjjVvTcoS/M3hg6Gi8B5KI0/z2uGuMGOjMi/Vt8uISJMQad1
-hWkZ8gTXp+WPhFwvf1xBpKLZkzDERRwgO3ZsgtAw6YFHz0p2dPoooNRAfiSo8+db
-iUhyq8hQDji76/VnxV/fJjY20c+8PmMbGVWHvMOQhnUZAGjL4qyJer6qgR7nigHm
-7TXhsf2CSRBd5FC3qHNTYHOZycjsWEB7oNCcq+wJ2zT7FOMfYZ4=
-=8SOv
+iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl47OusACgkQyqab/F7y
+TEBHEA//c5q8UvnZh1ZyXGaB16pT966/zq8ZE9aHus6+q/BUSpLvGHdaw4D4wA6A
+v2Arv8pvIzBxsmXiX66jm78pFDxMuj1C8TAxMTTHN7Yzg4l0vx40R3CYQIca/KLT
+gTZfX/7IjDtDxodN9Jz4kiXy3AUBHW/G+N177GR/1M4ppfiko1sZo3XQhnq6OkUQ
+QKeSYOD3MOy7IpuB21d9BScaVyFbdxxkbxSFATj9J8Fj7555P3P3SwG/z8MrZEpn
+QqSpiy7qbLlmwZLGjEceTMnAZNOyiJpnh+HcjtipfooCrlfvEaDu+ArOSvrrVvnE
+TuA5jTQT8iOiNPdaWGBIasxMfbM9XTDdT2yiyigFHE+k5gwk42LZQPB0ixkJuqnb
+EtYukFFcUn40S+cyxUzHovz1y7GTOtyRx2kWYLuM6spYbKcDfBHKvMAHzQSFJ/9J
+ato3Vx9J3Wg9OUMLYJLqDafE90+IAhS2SQcxsppP7FsI1s45wGjUl5xr2Yf+CE03
+YXBzDP8+SwiOlL3NF8Hx3+HgYAXoE0gSduiFtoZfoG29yxWBKt/aRSD/yfY19D2W
+iE+lZitykUmQcjRu/e4tL7KCTl83zC/ElA2YIVAiZegEalhguOvAUQ/tvrRg23mN
+o+QTU8lRKBtkTPRGDcphJVRn5c5oFf4BlTr5PncV0WGydwd9a6Q=
+=1+Yl
 -----END PGP SIGNATURE-----

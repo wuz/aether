@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 #__/\\\______________/\\\_____________________________        
 # _\/\\\_____________\/\\\_____________________________       
 #  _\/\\\_____________\/\\\_____________________________      
@@ -15,6 +14,10 @@
 # This is my[1] setup script - it's heavily adapted to my usecases
 # The code is CC0[2] so feel free to rework and reuse as you see fit.
 # Extensively inspired and reworked from: https://github.com/nnja/new-computer
+
+####################
+# Helper functions #
+####################
 
 # Colorize
 
@@ -39,11 +42,31 @@ cecho() {
   return
 }
 
+function cask_install() {
+  while read -r PROGRAM
+  do
+    brew cask install "$PROGRAM"
+  done
+}
+
+function brew_install() {
+  while read -r PROGRAM
+  do
+    brew install "$PROGRAM"
+  done
+}
+
 echo ""
 cecho "###############################################" $red
+cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" $red
+cecho "#                                             #" $red
+cecho "#---------------------------------------------#" $red
+cecho "#                                             #" $red
 cecho "#        DON'T RUN CODE YOU FIND ON THE       #" $red
 cecho "#      INTERNET WITHOUT READING IT FIRST      #" $red
 cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" $red
+cecho "#                                             #" $red
+cecho "#---------------------------------------------#" $red
 cecho "#                                             #" $red
 cecho "#          READ THIS CODE THOROUGHLY          #" $red
 cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" $red
@@ -78,16 +101,66 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Installing brew..."
 
-if test ! $(which brew)
+if test ! "$(command -v brew)"
 then
-	## Don't prompt for confirmation when installing homebrew
+  ## Don't prompt for confirmation when installing homebrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
 fi
 
-# Latest brew, install brew cask
+# Update brew, install cask
 brew upgrade
 brew update
 brew tap caskroom/cask
+
+#########################
+# Install brew packages #
+#########################
+
+echo "Installing brew packages..."
+
+brew_install << EOF
+  ack
+  git
+  exa
+  hub
+  go
+  tree
+  coreutils
+  moreutils
+  findutils
+  gnu-sed
+  gnu-time
+  gnupg
+  grep
+  hyperfine
+  jq
+  rename
+  shellcheck
+  the_silver_searcher
+  thefuck
+  ssh-copy-id
+  tmux
+  tmuxinator
+  todo-txt
+EOF
+
+#########################
+# Install cask packages #
+#########################
+
+echo "Installing cask packages..."
+
+cask_install << EOF
+  notion
+  docker
+  keybase
+  spotify
+  todotxt
+  visual-studio-code
+  bartender
+  firefox
+  tunnelblick
+EOF
 
 ##############################
 # Setup Keybase and GPG Keys #

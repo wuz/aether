@@ -12,9 +12,9 @@ gpg --output index.html --clearsign source.html
 ## TODO
 
 - [ ] Switch based on OS
-- [ ] Install programs
-  - [ ] Mac
-    - [ ] Homebrew
+- [x] Install programs
+  - [x] Mac
+    - [x] Homebrew
   - [ ] Linux
 - [ ] Setup Keybase
   - [ ] GPG keys from Keybase
