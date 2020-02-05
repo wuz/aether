@@ -42,18 +42,31 @@ cecho() {
   return
 }
 
-function cask_install() {
+cask_install() {
   while read -r PROGRAM
   do
     brew cask install "$PROGRAM"
   done
 }
 
-function brew_install() {
+brew_install() {
   while read -r PROGRAM
   do
     brew install "$PROGRAM"
   done
+}
+
+dot() {
+  src=$1
+  dest=$2
+  regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+  if [[ $src =~ $regex ]]
+  then
+    curl -s "$src" > "$dest"
+  else
+    base=${3:-"git@github.com"}
+    git clone "$base:$src" "$dest"
+  fi
 }
 
 echo ""
@@ -101,16 +114,16 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Installing brew..."
 
-if test ! "$(command -v brew)"
-then
-  ## Don't prompt for confirmation when installing homebrew
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
-fi
+# if test ! "$(command -v brew)"
+# then
+#   ## Don't prompt for confirmation when installing homebrew
+#   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
+# fi
 
 # Update brew, install cask
-brew upgrade
-brew update
-brew tap caskroom/cask
+# brew upgrade
+# brew update
+# brew tap caskroom/cask
 
 #########################
 # Install brew packages #
@@ -118,49 +131,58 @@ brew tap caskroom/cask
 
 echo "Installing brew packages..."
 
-brew_install << EOF
-  ack
-  git
-  exa
-  hub
-  go
-  tree
-  coreutils
-  moreutils
-  findutils
-  gnu-sed
-  gnu-time
-  gnupg
-  grep
-  hyperfine
-  jq
-  rename
-  shellcheck
-  the_silver_searcher
-  thefuck
-  ssh-copy-id
-  tmux
-  tmuxinator
-  todo-txt
-EOF
+# brew_install << EOF
+#   ack
+#   git
+#   exa
+#   hub
+#   go
+#   tree
+#   coreutils
+#   moreutils
+#   findutils
+#   gnu-sed
+#   gnu-time
+#   gnupg
+#   grep
+#   hyperfine
+#   jq
+#   rename
+#   shellcheck
+#   the_silver_searcher
+#   thefuck
+#   ssh-copy-id
+#   tmux
+#   tmuxinator
+#   todo-txt
+#   neovim
+# EOF
 
 #########################
 # Install cask packages #
 #########################
 
-echo "Installing cask packages..."
+# echo "Installing cask packages..."
 
-cask_install << EOF
-  notion
-  docker
-  keybase
-  spotify
-  todotxt
-  visual-studio-code
-  bartender
-  firefox
-  tunnelblick
-EOF
+# cask_install << EOF
+#   notion
+#   docker
+#   keybase
+#   spotify
+#   todotxt
+#   visual-studio-code
+#   bartender
+#   firefox
+#   tunnelblick
+# EOF
+
+####################
+# Install dotfiles #
+####################
+
+# dot "https://setup.wuz.sh/hackerrank.txt" "$HOME/.hackerrank"
+# dot "wuz/slack-workflows" "$HOME/workflows"
+dot "~wuz/longhand" "$HOME/longhand" "git@git.sr.ht"
 
 ##############################
 # Setup Keybase and GPG Keys #
