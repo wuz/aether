@@ -144,6 +144,7 @@ brew_install << EOF
   # Base tools
   git
   git-lfs
+  git-delta
   tmux
   tmuxinator
   ssh-copy-id
@@ -352,6 +353,7 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 mkdir -p "$HOME/.config/nvim"
 dot "https://setup.wuz.sh/init.vim" "$HOME/.config/nvim/init.vim"
 dot "~wuz/bin" "$HOME/.bin" "git@git.sr.ht"
+dot "https://setup.wuz.sh/.gitconfig" "$HOME/.gitconfig"
 
 ##############################
 # Setup Keybase and GPG Keys #
