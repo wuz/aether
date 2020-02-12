@@ -49,7 +49,7 @@
 [pager]
   branch = false
 [core]
-  pager = delta --dark --plus-color="#012800" --minus-color="#340001" --theme="base16-ocean.dark"
+  pager = delta --dark
 [color]
   ui = true
 [color "diff-highlight"]
