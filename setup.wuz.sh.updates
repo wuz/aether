@@ -1,11 +1,8 @@
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
 #!/bin/sh
 <<\EOF
 <!--
   Test
-- - -->
+- -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -81,21 +78,20 @@ EOF
 
 #!/bin/bash
 
-#__/\\\______________/\\\_____________________________        
-# _\/\\\_____________\/\\\_____________________________       
-#  _\/\\\_____________\/\\\_____________________________      
-#   _\//\\\____/\\\____/\\\___/\\\____/\\\__/\\\\\\\\\\\_     
-#    __\//\\\__/\\\\\__/\\\___\/\\\___\/\\\_\///////\\\/__    
-#     ___\//\\\/\\\/\\\/\\\____\/\\\___\/\\\______/\\\/____   
-#      ____\//\\\\\\//\\\\\_____\/\\\___\/\\\____/\\\/______  
-#       _____\//\\\__\//\\\______\//\\\\\\\\\___/\\\\\\\\\\\_ 
+#__/\\\______________/\\\_____________________________
+# _\/\\\_____________\/\\\_____________________________
+#  _\/\\\_____________\/\\\_____________________________
+#   _\//\\\____/\\\____/\\\___/\\\____/\\\__/\\\\\\\\\\\_
+#    __\//\\\__/\\\\\__/\\\___\/\\\___\/\\\_\///////\\\/__
+#     ___\//\\\/\\\/\\\/\\\____\/\\\___\/\\\______/\\\/____
+#      ____\//\\\\\\//\\\\\_____\/\\\___\/\\\____/\\\/______
+#       _____\//\\\__\//\\\______\//\\\\\\\\\___/\\\\\\\\\\\_
 #        ______\///____\///________\/////////___\///////////__
 #
 
 # This is my[1] setup script - it's heavily adapted to my usecases
 # The code is CC0[2] so feel free to rework and reuse as you see fit.
 # Extensively inspired and reworked from: https://github.com/nnja/new-computer
-
 
 ####################
 # Helper functions #
@@ -116,37 +112,6 @@ white=$(tput setaf 7)
 # Resets the style
 reset=$(tput sgr0)
 
-show_spinner()
-{
-  local -r pid="${1}"
-  local -r delay='0.5'
-  SYMBOLS='⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷'
-  SPINNER_PPID=$(ps -p "${pid}" -o ppid=)
-  while ps a | awk '{print $1}' | grep -q "${pid}"; do
-    tput civis
-    for c in ${SYMBOLS}; do
-      local COLOR
-      COLOR=$(tput setaf 5)
-      tput sc
-      env printf "${COLOR}${c}${SPINNER_NORMAL}"
-      tput rc
-      env sleep .2
-      if [ ! -z "$SPINNER_PPID" ]; then
-        SPINNER_PARENTUP=$(ps $SPINNER_PPID)
-        if [ -z "$SPINNER_PARENTUP" ]; then
-          break 2
-        fi
-      fi
-    done
-  done
-  tput cnorm
-}
-
-spinner() {
-  ("$@") &
-  show_spinner "$!"
-}
-
 # Color-echo. Improved. [Thanks @joaocunha]
 # arg $1 = message
 # arg $2 = Color
@@ -160,7 +125,7 @@ cask_install() {
   do
     if [ -n "$PROGRAM" ]; then
       [[ "$PROGRAM" =~ ^#.*$ ]] && continue
-      spinner brew cask install "$PROGRAM"
+      brew cask install "$PROGRAM"
     fi
   done
 }
@@ -170,7 +135,7 @@ brew_install() {
   do
     if [ -n "$PROGRAM" ]; then
       [[ "$PROGRAM" =~ ^#.*$ ]] && continue
-      spinner brew install "$PROGRAM"
+      brew install "$PROGRAM"
     fi
   done
 }
@@ -178,55 +143,56 @@ brew_install() {
 dot() {
   src=$1
   dest=$2
-  args=$3
   regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
   if [[ $src =~ $regex ]]
   then
     curl -s "$src" > "$dest"
   else
     base=${3:-"git@github.com"}
-    git clone "$base:$src" "$dest" "$args"
+    git clone "$base:$src" "$dest"
   fi
 }
 
-#echo ""
-#cecho "###############################################" "$red"
-#cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#---------------------------------------------#" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#        DON'T RUN CODE YOU FIND ON THE       #" "$red"
-#cecho "#      INTERNET WITHOUT READING IT FIRST      #" "$red"
-#cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#---------------------------------------------#" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#          READ THIS CODE THOROUGHLY          #" "$red"
-#cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" "$red"
-#cecho "###############################################" "$red"
-#echo ""
+echo ""
+cecho "###############################################" "$red"
+cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" "$red"
+cecho "#                                             #" "$red"
+cecho "#---------------------------------------------#" "$red"
+cecho "#                                             #" "$red"
+cecho "#        DON'T RUN CODE YOU FIND ON THE       #" "$red"
+cecho "#      INTERNET WITHOUT READING IT FIRST      #" "$red"
+cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" "$red"
+cecho "#                                             #" "$red"
+cecho "#---------------------------------------------#" "$red"
+cecho "#                                             #" "$red"
+cecho "#          READ THIS CODE THOROUGHLY          #" "$red"
+cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" "$red"
+cecho "###############################################" "$red"
+echo ""
 
-## Set continue to false by default.
-#CONTINUE=false
+# Set continue to false by default.
+CONTINUE=false
 
-#echo ""
-#cecho "Have you read through the script you're about to run and " "$blue"
-#cecho "understood that it will make changes to your computer? (y/n)" "$blue"
-#read -r response
-#if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-#  CONTINUE=true
-#fi
+echo ""
+cecho "Have you read through the script you're about to run and " "$blue"
+cecho "understood that it will make changes to your computer? (y/n)" "$blue"
+read -r response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+  CONTINUE=true
+fi
 
-#if ! $CONTINUE; then
-#  # Check if we're continuing and output a message if not
-#  cecho "Please go read the script, it only takes a few minutes" "$red"
-#  exit
-#fi
+if ! $CONTINUE; then
+  # Check if we're continuing and output a message if not
+  cecho "Please go read the script, it only takes a few minutes" "$red"
+  exit
+fi
 
-## Here we go.. ask for the administrator password upfront and run a
-## keep-alive to update existing `sudo` time stamp until script has finished
-#sudo -v
-#while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# Here we go.. ask for the administrator password upfront and run a
+# keep-alive to update existing `sudo` time stamp until script has finished
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# : <<ENDCOMMENT
 
 ##############################
 # Prerequisite: Install Brew #
@@ -241,9 +207,9 @@ then
 fi
 
 # Update brew, install cask
-echo "Updating/Upgrading Brew"
-spinner brew upgrade 
-spinner brew update 
+brew upgrade
+brew update
+brew tap caskroom/cask
 
 #########################
 # Install brew packages #
@@ -266,7 +232,6 @@ brew_install << EOF
   shellcheck
   todo-txt
   thefuck
-  fzf
 
   # Linux-style tools
   coreutils
@@ -297,7 +262,7 @@ EOF
 
 echo "Installing cask packages..."
 
-spinner cask_install << EOF
+cask_install << EOF
 
   # Productivity
   notion
@@ -333,18 +298,11 @@ spinner cask_install << EOF
 
 EOF
 
-####################
-# Install dotfiles # 
-####################
+##############
+# Install Rust
+##############
 
-spinner mkdir -p "$HOME/.config/nvim"
-spinner dot "~wuz/.files" "$HOME/.files"
-
-######################
-# Install asdf + langs
-######################
-
-dot asdf-vm/asdf.git "$HOME/.asdf" "--branch v0.7.7"
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ######################
 # Install Python Tools
@@ -379,7 +337,7 @@ defaults write com.apple.dock autohide-delay -float 0
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
-# Only Show Open Applications In The Dock  
+# Only Show Open Applications In The Dock
 defaults write com.apple.dock static-only -bool true
 
 # Display full POSIX path as Finder window title
@@ -466,6 +424,14 @@ defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 # Prevent Photos from opening automatically when devices are plugged in
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
+####################
+# Install dotfiles #
+####################
+
+mkdir -p "$HOME/.config/nvim"
+dot "https://setup.wuz.sh/init.vim" "$HOME/.config/nvim/init.vim"
+dot "~wuz/bin" "$HOME/.bin" "git@git.sr.ht"
+dot "https://setup.wuz.sh/.gitconfig" "$HOME/.gitconfig"
 
 ##############################
 # Setup Keybase and GPG Keys #
@@ -480,6 +446,8 @@ curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh >
 sh ./installer.sh ~/.cache/dein
 
 vim +"call :dein#install()" +qall
+
+# ENDCOMMENT
 
 echo ""
 cecho "Boom! All done!" "$cyan"
@@ -500,19 +468,3 @@ exit 0
 
 # [1] - https://wuz.sh
 # [2] - https://creativecommons.org/share-your-work/public-domain/cc0/
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl6CU2wACgkQyqab/F7y
-TEBPlg/+PGCesngJhX7vffnaOkoWA0dNxWenjyuUBreqUERze0sgoVTv5anTyi7h
-/tpNBnRtRNibX0bbtkCT8tiWpa+bT2CzhljiycvsDKIQ4AALlQ62PaDLZcOdu8oI
-0gnENYXrryDnvbX6iR2QzuPkYVo7PRHIZCfuxv4MXE83micaw7vbsBG48xAN/hH7
-7zn6aVDrkjpubI2ejXN1sJqdOIhNr2vLgKyki+t1UxUHUWT35C86GqVqpJUyGmS1
-FrFOtWodsdR7Vm2aSiOzweMZ/pCEK6thrxkwXIiYFCq4EmIWQlr/urxluE8IAfhp
-ZFJX8HBf3tysLbFXWRRWsQq8kZ4cpb7TWnz5LyUh0ev1IoaEZVyj+OaegY6l3hvW
-kZn+WJE8gGp3jCpDYhAKyMyCpHkO1bsNpHuQ2XKD9Dpf3OSex6BSTwPz3jYpTUqi
-dg8pJBNTpfWf3eaU5FPQdeUDNk1VwiWh2gWZxBYa5eonX0pIxGJL9tilUmkQOoVY
-aCHQVNpQL1GR6g81G/lmYvb906VZXyZ2rGMLQHFlEz8Gy3OfRRh0t0kLXJn+dQ3Y
-0LBfKS0D+ReyqQAtB60+Qaqjm00P1HutiIB8PTI36Y8JmptvZlQTh0qsEbm9Q7Ra
-AubQLEHCPkM0CLb2Ly/bkx5VWDUZ6VZcOnOjP1TlPflVrRycpH8=
-=Zszd
------END PGP SIGNATURE-----

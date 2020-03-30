@@ -15,6 +15,7 @@
 # The code is CC0[2] so feel free to rework and reuse as you see fit.
 # Extensively inspired and reworked from: https://github.com/nnja/new-computer
 
+
 ####################
 # Helper functions #
 ####################
@@ -34,6 +35,37 @@ white=$(tput setaf 7)
 # Resets the style
 reset=$(tput sgr0)
 
+show_spinner()
+{
+  local -r pid="${1}"
+  local -r delay='0.5'
+  SYMBOLS='⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷'
+  SPINNER_PPID=$(ps -p "${pid}" -o ppid=)
+  while ps a | awk '{print $1}' | grep -q "${pid}"; do
+    tput civis
+    for c in ${SYMBOLS}; do
+      local COLOR
+      COLOR=$(tput setaf 5)
+      tput sc
+      env printf "${COLOR}${c}${SPINNER_NORMAL}"
+      tput rc
+      env sleep .2
+      if [ ! -z "$SPINNER_PPID" ]; then
+        SPINNER_PARENTUP=$(ps $SPINNER_PPID)
+        if [ -z "$SPINNER_PARENTUP" ]; then
+          break 2
+        fi
+      fi
+    done
+  done
+  tput cnorm
+}
+
+spinner() {
+  ("$@") &
+  show_spinner "$!"
+}
+
 # Color-echo. Improved. [Thanks @joaocunha]
 # arg $1 = message
 # arg $2 = Color
@@ -47,7 +79,7 @@ cask_install() {
   do
     if [ -n "$PROGRAM" ]; then
       [[ "$PROGRAM" =~ ^#.*$ ]] && continue
-      brew cask install "$PROGRAM"
+      spinner brew cask install "$PROGRAM"
     fi
   done
 }
@@ -57,7 +89,7 @@ brew_install() {
   do
     if [ -n "$PROGRAM" ]; then
       [[ "$PROGRAM" =~ ^#.*$ ]] && continue
-      brew install "$PROGRAM"
+      spinner brew install "$PROGRAM"
     fi
   done
 }
@@ -65,56 +97,55 @@ brew_install() {
 dot() {
   src=$1
   dest=$2
+  args=$3
   regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
   if [[ $src =~ $regex ]]
   then
     curl -s "$src" > "$dest"
   else
     base=${3:-"git@github.com"}
-    git clone "$base:$src" "$dest"
+    git clone "$base:$src" "$dest" "$args"
   fi
 }
 
-echo ""
-cecho "###############################################" "$red"
-cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" "$red"
-cecho "#                                             #" "$red"
-cecho "#---------------------------------------------#" "$red"
-cecho "#                                             #" "$red"
-cecho "#        DON'T RUN CODE YOU FIND ON THE       #" "$red"
-cecho "#      INTERNET WITHOUT READING IT FIRST      #" "$red"
-cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" "$red"
-cecho "#                                             #" "$red"
-cecho "#---------------------------------------------#" "$red"
-cecho "#                                             #" "$red"
-cecho "#          READ THIS CODE THOROUGHLY          #" "$red"
-cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" "$red"
-cecho "###############################################" "$red"
-echo ""
+#echo ""
+#cecho "###############################################" "$red"
+#cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" "$red"
+#cecho "#                                             #" "$red"
+#cecho "#---------------------------------------------#" "$red"
+#cecho "#                                             #" "$red"
+#cecho "#        DON'T RUN CODE YOU FIND ON THE       #" "$red"
+#cecho "#      INTERNET WITHOUT READING IT FIRST      #" "$red"
+#cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" "$red"
+#cecho "#                                             #" "$red"
+#cecho "#---------------------------------------------#" "$red"
+#cecho "#                                             #" "$red"
+#cecho "#          READ THIS CODE THOROUGHLY          #" "$red"
+#cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" "$red"
+#cecho "###############################################" "$red"
+#echo ""
 
-# Set continue to false by default.
-CONTINUE=false
+## Set continue to false by default.
+#CONTINUE=false
 
-echo ""
-cecho "Have you read through the script you're about to run and " "$blue"
-cecho "understood that it will make changes to your computer? (y/n)" "$blue"
-read -r response
-if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-  CONTINUE=true
-fi
+#echo ""
+#cecho "Have you read through the script you're about to run and " "$blue"
+#cecho "understood that it will make changes to your computer? (y/n)" "$blue"
+#read -r response
+#if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+#  CONTINUE=true
+#fi
 
-if ! $CONTINUE; then
-  # Check if we're continuing and output a message if not
-  cecho "Please go read the script, it only takes a few minutes" "$red"
-  exit
-fi
+#if ! $CONTINUE; then
+#  # Check if we're continuing and output a message if not
+#  cecho "Please go read the script, it only takes a few minutes" "$red"
+#  exit
+#fi
 
-# Here we go.. ask for the administrator password upfront and run a
-# keep-alive to update existing `sudo` time stamp until script has finished
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
-# : <<ENDCOMMENT
+## Here we go.. ask for the administrator password upfront and run a
+## keep-alive to update existing `sudo` time stamp until script has finished
+#sudo -v
+#while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ##############################
 # Prerequisite: Install Brew #
@@ -129,9 +160,9 @@ then
 fi
 
 # Update brew, install cask
-brew upgrade
-brew update
-brew tap caskroom/cask
+echo "Updating/Upgrading Brew"
+spinner brew upgrade 
+spinner brew update 
 
 #########################
 # Install brew packages #
@@ -154,6 +185,7 @@ brew_install << EOF
   shellcheck
   todo-txt
   thefuck
+  fzf
 
   # Linux-style tools
   coreutils
@@ -184,7 +216,7 @@ EOF
 
 echo "Installing cask packages..."
 
-cask_install << EOF
+spinner cask_install << EOF
 
   # Productivity
   notion
@@ -220,11 +252,18 @@ cask_install << EOF
 
 EOF
 
-##############
-# Install Rust
-##############
+####################
+# Install dotfiles # 
+####################
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+spinner mkdir -p "$HOME/.config/nvim"
+spinner dot "~wuz/.files" "$HOME/.files"
+
+######################
+# Install asdf + langs
+######################
+
+dot asdf-vm/asdf.git "$HOME/.asdf" "--branch v0.7.7"
 
 ######################
 # Install Python Tools
@@ -346,14 +385,6 @@ defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 # Prevent Photos from opening automatically when devices are plugged in
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
-####################
-# Install dotfiles # 
-####################
-
-mkdir -p "$HOME/.config/nvim"
-dot "https://setup.wuz.sh/init.vim" "$HOME/.config/nvim/init.vim"
-dot "~wuz/bin" "$HOME/.bin" "git@git.sr.ht"
-dot "https://setup.wuz.sh/.gitconfig" "$HOME/.gitconfig"
 
 ##############################
 # Setup Keybase and GPG Keys #
@@ -368,8 +399,6 @@ curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh >
 sh ./installer.sh ~/.cache/dein
 
 vim +"call :dein#install()" +qall
-
-# ENDCOMMENT
 
 echo ""
 cecho "Boom! All done!" "$cyan"
