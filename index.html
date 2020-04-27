@@ -5,79 +5,56 @@ Hash: SHA256
 <<\EOF
 <!--
   Test
-- - -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
-    <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="MobileOptimized" content="320"/>
-    <style>
-        html {
-            background: #191b2a;
-            color: #191b2a;
-            font-family: monospace;
-        }
-        * {
-            text-indent: -9999px;
-        }
-        body {
-            text-align:center;
-            margin: 0;
-            padding:0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color:#eff0f6;
-            overflow:hidden;
-            width: 100%;
-            height: 100%;
-            top: 0px;
-            right: 0px;
-            display: flex;
-            justify-content: center; /* align horizontal */
-            align-items: center; /* align vertical */
-        }
+  - -->
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
+      <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
+      <meta name="apple-mobile-web-app-capable" content="yes"/>
+      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+      <meta name="HandheldFriendly" content="true"/>
+      <meta name="MobileOptimized" content="320"/>
+      <style>
+*,*:before,*:after{box-sizing:border-box;} html{background:#191b2a;color:#191b2a;font-family:monospace;font-size:16px;} *{text-indent:-9999px;} body{margin:0;padding:0;display:flex;align-items:center;justify-content:center;color:#eff0f6;overflow:hidden;width:100vw;height:100vh;top:0px;right:0px;display:flex;justify-content:center;align-items:center;} article{padding:30px 50px;max-height:100vh;height:100vh;max-width:600px;width:100%;overflow-y:auto;} article *{text-indent:0px;} a{color:#eff0f6;text-decoration:none;} article * + *{margin-bottom:0.5em;} pre{text-align:left;line-height:1.1;} ol{padding:0;margin:0;} ol li + li{margin-bottom:1em;} code{margin:0.5em 0;padding:10px 5px;background:#3c4367;display:block;border-bottom:1px solid #4f5987;text-align:left;border-radius:2px;} code:before{content:"$ ";color:#ff476e;}       </style>
+    </head>
+    <body>
+      <article>
+        <h1>setup.wuz.sh</h1>
+        <strong>Download and verify integrity with GnuPG:</strong>
+        <ol>
+          <li>Import my keys (you can verify keybase.io/wuz as me by visiting the site!)
+            <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
+          <li>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)
+            <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
+            <code>trust</code>
+            <li>At this point, you need to decide how much you trust me, represented from 1-5
+              You probably don't trust me ultimately - that should just be reserved for you.
+              If, in looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
+              You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a>
+              <code> 4</code></li>
+          </li>
+          <li>Recieve the keys from a keyserver
+            <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
+          <li>Verify that this code is actually signed by me. Don't forget, `https` is really important here!
+            <code> curl https://setup.wuz.sh | gpg -o setup.wuz.sh</code></li>
+        </ol>
 
-        div > * {
-            text-indent:0px;
-        }
-        a {
-            color: #eff0f6;
-            text-decoration: none;
-        }
-        pre {
-            text-align: left;
-        }
-    </style>
-  </head>
-  <body>
-    <div>
-      <h1>setup.wuz.sh</h1>
-        <pre>
-Download and verify integrity with GnuPG
-> gpg --recv-keys 0xCAA69BFC5EF24C40
-> curl https://setup.wuz.sh | gpg -o setup.wuz.sh
+        Don't pipe to `sh` in the previous step -
+        you don't know if the signature is valid
+        or what the source code is doing.
 
-Don't pipe to `sh` in the previous step -
-you don't know if the signature is valid
-or what the source code is doing.
+        <strong>Inspect source code</strong>
+        <code> less setup.wuz.sh</code>
 
-Inspect source code
-> less setup.wuz.sh
-
-Run
-> chmod +x setup.wuz.sh
-> ./setup.wuz.sh
-        </pre>
-    </div>
-  </body>
-</html>
-<!--
-EOF
+        <strong>Run</strong>
+        <code> chmod +x setup.wuz.sh</code>
+        <code> ./setup.wuz.sh</code>
+      </article>
+    </body>
+  </html>
+  <!--
+    EOF
 
 #!/bin/bash
 
@@ -502,17 +479,17 @@ exit 0
 # [2] - https://creativecommons.org/share-your-work/public-domain/cc0/
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl6CU2wACgkQyqab/F7y
-TEBPlg/+PGCesngJhX7vffnaOkoWA0dNxWenjyuUBreqUERze0sgoVTv5anTyi7h
-/tpNBnRtRNibX0bbtkCT8tiWpa+bT2CzhljiycvsDKIQ4AALlQ62PaDLZcOdu8oI
-0gnENYXrryDnvbX6iR2QzuPkYVo7PRHIZCfuxv4MXE83micaw7vbsBG48xAN/hH7
-7zn6aVDrkjpubI2ejXN1sJqdOIhNr2vLgKyki+t1UxUHUWT35C86GqVqpJUyGmS1
-FrFOtWodsdR7Vm2aSiOzweMZ/pCEK6thrxkwXIiYFCq4EmIWQlr/urxluE8IAfhp
-ZFJX8HBf3tysLbFXWRRWsQq8kZ4cpb7TWnz5LyUh0ev1IoaEZVyj+OaegY6l3hvW
-kZn+WJE8gGp3jCpDYhAKyMyCpHkO1bsNpHuQ2XKD9Dpf3OSex6BSTwPz3jYpTUqi
-dg8pJBNTpfWf3eaU5FPQdeUDNk1VwiWh2gWZxBYa5eonX0pIxGJL9tilUmkQOoVY
-aCHQVNpQL1GR6g81G/lmYvb906VZXyZ2rGMLQHFlEz8Gy3OfRRh0t0kLXJn+dQ3Y
-0LBfKS0D+ReyqQAtB60+Qaqjm00P1HutiIB8PTI36Y8JmptvZlQTh0qsEbm9Q7Ra
-AubQLEHCPkM0CLb2Ly/bkx5VWDUZ6VZcOnOjP1TlPflVrRycpH8=
-=Zszd
+iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl6nSwIACgkQyqab/F7y
+TEAD8RAAzvC2YBDBJa+q+TBmLczvn2epDjmGpw/XARjdyqYjw1Z8eCEXJimY9/kf
+Scy7A6K/YABJNDGGc+sVzEOM+6mvlXQD6ZQorBHFvGRLfF5l+gWf44ITclJ/gTsZ
+CBrnIeeAxH9Lz/Ryb5Lzdc2GAO2z6VpDWgOcvjudD1tfJ2HG7v5gwDM2AVzbAtOk
+OvWcycLTR7J/KurM6tPnNWIAEg8/2zYB/xz02SUsRe5ivJ/SoitIqTYdoZ3+yAOI
+ZvcqNcEYgVulClpI31dQITnHBHTQAWw6pHDiJLA/9hHRkR3Xd0eb2ycg2KnUySIJ
+jT14dWAJdP3cLHRRtM4TKBtRbCdm7YaDIjqFBnzuU2icRKWMC7p2rdqt/Q7b3BeP
+d4htVz21Y8BErZV3zx/B2TVPbuh1DlFDADWy8DDDCW2JOUVLDIUZSgkthn5aVXhw
+B5bAOy6+H2nB4ALVgJeH1mKNl8rgxXy4pDAY8bV9ZW/jXeHQ+VxUk/OT78ePj3A7
+shltDA+Mrt8DMpBGGs4Y/d+cUNlJOKyGk4AK8JJFdaft7qNTSR/shGlTEzdiesQF
+H8noOb+2KXs8GRj75qmwE1eRCpb84o6tT++hgj7SXinoiRS/zy1jGLjhVf3IIgYs
+3LjYupFaT7x+a3JeMiuMLox5Cx08TwEqdY7gyk/M5KAitjtnwRM=
+=xwPo
 -----END PGP SIGNATURE-----
