@@ -163,6 +163,7 @@ fi
 echo "Updating/Upgrading Brew"
 spinner brew upgrade 
 spinner brew update 
+spinne brew tap homebrew/cask-cask
 
 #########################
 # Install brew packages #
@@ -384,7 +385,6 @@ defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
 # Prevent Photos from opening automatically when devices are plugged in
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
-
 
 ##############################
 # Setup Keybase and GPG Keys #
