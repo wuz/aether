@@ -188,3 +188,11 @@ done
 speak "Alright! Nix is install and setup with what we need! Now let's pull down the nix config files."
 confirm "OK to pull the files we need (git.sr.ht/~wuz/nix -> ~/.config/nixpkgs)?"
 git clone git@git.sr.ht:~wuz/nix ~/.config/nixpkgs
+home-manager switch
+
+speak "Great! Nix is ready to go, now let's setup the Mac to be closer to linux"
+confirm "OK to pull the files we need (install linuxify)?"
+git clone https://github.com/fabiomaia/linuxify.git
+cd linuxify/
+./linuxify install
+
