@@ -151,7 +151,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 speak "This script runs primarily on nix. Can we install Nix now?"
 confirm "OK to install Nix and setup the needed directories and nix channels?"
-curl -L https://nixos.org/nix/install | sh
+# curl -L https://nixos.org/nix/install | sh
 mkdir -p ~/.config/nix/ ~/.config/nixpkgs/
 echo 'max-jobs = auto' >>~/.config/nix/nix.conf
 nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
@@ -187,12 +187,13 @@ done
 
 speak "Alright! Nix is install and setup with what we need! Now let's pull down the nix config files."
 confirm "OK to pull the files we need (git.sr.ht/~wuz/nix -> ~/.config/nixpkgs)?"
+rm -rf ~/.config/nixpkgs
 git clone git@git.sr.ht:~wuz/nix ~/.config/nixpkgs
 home-manager switch
 
 speak "Great! Nix is ready to go, now let's setup the Mac to be closer to linux"
 confirm "OK to pull the files we need (install linuxify)?"
-git clone https://github.com/fabiomaia/linuxify.git
-cd linuxify/
+git clone https://github.com/fabiomaia/linuxify.git ~/linuxify
+cd ~/linuxify/
 ./linuxify install
 
