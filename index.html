@@ -3,58 +3,57 @@ Hash: SHA256
 
 #!/bin/sh
 <<\EOF
+<head>
+  <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
+  <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="MobileOptimized" content="320"/>
+  <style>
+*,*:before,*:after{box-sizing:border-box;} body{margin:0;padding:2em 4em;align-items:center;justify-content:center;background:rgb(245,245,245);color:rgb(4,13,17);font-family:Menlo,monospace;font-size:16px;max-width:60em;width:100vw;height:100vh;} a{color:#ff476e;} body * + *{margin-bottom:0.5em;} pre{text-align:left;line-height:1.1;} ol{padding:0;margin:0;} ol li + li{margin-bottom:1em;} code{margin:0.5em 0;padding:10px 5px;background:#f5c3d4;display:block;border-bottom:1px solid rgb(255,70,126);;text-align:left;border-radius:2px;} code:before{content:"$ ";color:#ff476e;} code.gpg:before{content:"> ";}   </style>
+</head>
+<body>
+  <h1>This website is a shell script</h1>
+  <p><a href="https://wuz.sh">I</a> use it to setup my dev machine</p>
+  <strong>Download and verify integrity with GnuPG:</strong>
+  <ol>
+    <li><p>Import my keys (you can verify <a href="https://keybase.io/wuz">keybase.io/wuz</a> as me by visiting the site!)</p>
+      <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
+    <li><p>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)</p>
+      <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
+      <code class="gpg">trust</code>
+    <li>
+      <p>At this point, you need to decide how much you trust me, represented from 1-5
+      You probably don't trust me ultimately - that should just be reserved for you.</p>
+      <p>If, after looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
+        You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a></p>
+      <code class="gpg"> 4</code></li>
+    </li>
+    <li>
+      <p>Recieve the keys from a keyserver</p>
+      <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
+    <li>
+      <p>Verify that this code is actually signed by me. Don't forget, `https` is really important here!</p>
+      <code> curl -sSL https://setup.wuz.sh | gpg -o setup.wuz.sh</code>
+
+      <strong>Don't pipe to `sh` here -
+      you don't know if the signature is valid
+      or what the source code is doing.</strong>
+    </li>
+    <li>
+      <strong>Inspect source code</strong>
+      <code> less setup.wuz.sh</code>
+    </li>
+    <li>
+      <strong>Run</strong>
+      <code> chmod +x setup.wuz.sh</code>
+      <code> ./setup.wuz.sh</code>
+    </li>
+  </ol>
+</body>
 <!--
-  Test
-  - -->
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
-      <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
-      <meta name="apple-mobile-web-app-capable" content="yes"/>
-      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-      <meta name="HandheldFriendly" content="true"/>
-      <meta name="MobileOptimized" content="320"/>
-      <style>
-*,*:before,*:after{box-sizing:border-box;} html{background:#191b2a;color:#191b2a;font-family:monospace;font-size:16px;} *{text-indent:-9999px;} body{margin:0;padding:0;display:flex;align-items:center;justify-content:center;color:#eff0f6;overflow:hidden;width:100vw;height:100vh;top:0px;right:0px;display:flex;justify-content:center;align-items:center;} article{padding:30px 50px;max-height:100vh;height:100vh;max-width:600px;width:100%;overflow-y:auto;} article *{text-indent:0px;} a{color:#eff0f6;text-decoration:none;} article * + *{margin-bottom:0.5em;} pre{text-align:left;line-height:1.1;} ol{padding:0;margin:0;} ol li + li{margin-bottom:1em;} code{margin:0.5em 0;padding:10px 5px;background:#3c4367;display:block;border-bottom:1px solid #4f5987;text-align:left;border-radius:2px;} code:before{content:"$ ";color:#ff476e;}       </style>
-    </head>
-    <body>
-      <article>
-        <h1>setup.wuz.sh</h1>
-        <strong>Download and verify integrity with GnuPG:</strong>
-        <ol>
-          <li>Import my keys (you can verify keybase.io/wuz as me by visiting the site!)
-            <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
-          <li>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)
-            <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
-            <code>trust</code>
-            <li>At this point, you need to decide how much you trust me, represented from 1-5
-              You probably don't trust me ultimately - that should just be reserved for you.
-              If, in looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
-              You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a>
-              <code> 4</code></li>
-          </li>
-          <li>Recieve the keys from a keyserver
-            <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
-          <li>Verify that this code is actually signed by me. Don't forget, `https` is really important here!
-            <code> curl https://setup.wuz.sh | gpg -o setup.wuz.sh</code></li>
-        </ol>
-
-        Don't pipe to `sh` in the previous step -
-        you don't know if the signature is valid
-        or what the source code is doing.
-
-        <strong>Inspect source code</strong>
-        <code> less setup.wuz.sh</code>
-
-        <strong>Run</strong>
-        <code> chmod +x setup.wuz.sh</code>
-        <code> ./setup.wuz.sh</code>
-      </article>
-    </body>
-  </html>
-  <!--
-    EOF
+  EOF
 
 #!/bin/bash
 
@@ -208,15 +207,18 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 speak "This script runs primarily on nix. Can we install Nix now?"
-confirm "OK to install Nix and setup the needed directories and nix channels?"
-curl -L https://nixos.org/nix/install | sh
+confirm "OK to install Nix and setup the needed directories, files, and nix channels?"
+# curl -L https://nixos.org/nix/install | sh
 mkdir -p ~/.config/nix/ ~/.config/nixpkgs/
 echo 'max-jobs = auto' >>~/.config/nix/nix.conf
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
 nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --add https://github.com/kwbauson/cfg/archive/main.tar.gz kwbauson-cfg
 nix-channel --update
 nix-shell '<home-manager>' -A install
+rm -rf ./result
 
 speak "Cool, let's set up xcode tools so that we have access to git."
 confirm "OK to install xcode tools (xcode-select --install)?"
@@ -243,22 +245,25 @@ while [ true ] ; do
   fi
 done
 
-speak "Alright! Nix is install and setup with what we need! Now let's pull down the nix config files."
+speak "Alright! Nix is installed and setup with what we need! Now let's pull down the nix config files and install everything!."
 confirm "OK to pull the files we need (git.sr.ht/~wuz/nix -> ~/.config/nixpkgs)?"
+rm -rf ~/.config/nixpkgs
 git clone git@git.sr.ht:~wuz/nix ~/.config/nixpkgs
+darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin.nix
+
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAmCYZG0ACgkQyqab/F7y
-TEDoKQ//SgnlvdxLWCgYgjlzyF0uu16p4tWR2fB9w3qR2xG69Fc/YDdwNFAyifPe
-uxI6x4aIYdZ1ohQC5Y5pm7+22C9pnmcL34aJ/lN1ZnSHSntXNcPHtPhh/o+DnnBl
-zLhP2nfNYrrOFStEgV8dYsaxpgkrvdgk9ZNVd0v/mOpNlBBjjOyXg+MDjFtD8JO7
-vz36WJT6leZldMXYw//noB2ISLInWATol5QH0Acn1nJhvrTJMZsVyuo+ZDtYV89F
-4A9XRb1VDLy0dPcwhxcGrkopyI5hOEWohjk4nrzs+kL/CM+Q6UhVc/mGhhLgZIx5
-UKsHHLZ5tf3MXCtv2dbma0oIjCPfqz4xbvnLJCjH2BnpaGlYYShSO8i/JDC5BEdf
-pBVRNGpopmYJ7Whz1vCfWKk9uPwECVz/Ve9THgN/6QEQxYX/rSgveHkUVpdM+qLt
-n2e4A0bpCx/MFWs2NJnnZjT4pUt5vppl3jTeIgjCyaeua60itAoyAVnQi0ZvHJfx
-97QnaHXSpwAXGJqeWaRgiRsSHmanxGCu1VMEHGLyxv4s8MJxrXy2PjPvSQAbqZYf
-D9XFQhA/bzJI7f88FGD+SRy3Q1QrzUi5u//AkuO+/k+oWaCFbdjtI49bvy2JfFoM
-5PHCRkmzehTaTIYsosVXdeBbS8FXGqAvkq1jS8Fsw5Z9o6PHQ/Q=
-=b78Z
+iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAmDl1ncACgkQyqab/F7y
+TECTzBAAxS2pK2A+8KCwV+dYx77w60lkjSfmzs6aM46xVUoP7JdXzwbY98inmEfs
+pnze7eDFhano3Uxd7YLjduPEFDwmt1q407m2oH4zUzzTIyyOEyqwFBh3OPo8z912
+ZRWxox2gfkg8XkHB62YfPxRHwPd+6vawXTUHr+wPsMB+cEmA3N2XXt3nvnG+pgUs
+jgujEuYHVDMjD7Un04C/TcxQv76TBL0sJghSgEbreFWIz44+0kGNVXsobq+c7iAO
+6Tlzkjf3zKkNWuR5mLBsi0P2r1bKFBZorQs91LKeerLK/cdXX0tGnu8nNqRJpzEH
+qmcdrDYQWtkdW8iTvEMwgzUfD1wnXTxTXbWcRfoxe1TzWjOkmUr/JL3S6Z2shkGh
+8jmaxObQi3LgjDUNG4qfh3BTUTN70GYzeIMbp0M6xWV8y5GCXM6Q0N+T+bnH2Syl
+RXfSVjzh9gvbSgMXLNUI4WkoL4+zsp1lVtEGzWwP5aakDe4nRY352vGPq9BddX/N
+b5E8EQqnfqvdoPLFgdZEyx+5xUx4yOy4VTTRyuS3AdUbOcuMu4l2znfgcOoyWpiC
+wLgzs2LxwQqTTqGG5YwUCojq8OefBh5jgatP21/OBUjgIklYAfhDVJzEKoNkSG4T
+UIlMQUqOS4VtwPK9e2h0x+jnOFJrdY1QBFa2qaWNzHr30v1FY0E=
+=Y4+A
 -----END PGP SIGNATURE-----

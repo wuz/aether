@@ -150,15 +150,18 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 speak "This script runs primarily on nix. Can we install Nix now?"
-confirm "OK to install Nix and setup the needed directories and nix channels?"
+confirm "OK to install Nix and setup the needed directories, files, and nix channels?"
 # curl -L https://nixos.org/nix/install | sh
 mkdir -p ~/.config/nix/ ~/.config/nixpkgs/
 echo 'max-jobs = auto' >>~/.config/nix/nix.conf
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
 nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --add https://github.com/kwbauson/cfg/archive/main.tar.gz kwbauson-cfg
 nix-channel --update
 nix-shell '<home-manager>' -A install
+rm -rf ./result
 
 speak "Cool, let's set up xcode tools so that we have access to git."
 confirm "OK to install xcode tools (xcode-select --install)?"
@@ -185,15 +188,9 @@ while [ true ] ; do
   fi
 done
 
-speak "Alright! Nix is install and setup with what we need! Now let's pull down the nix config files."
+speak "Alright! Nix is installed and setup with what we need! Now let's pull down the nix config files and install everything!."
 confirm "OK to pull the files we need (git.sr.ht/~wuz/nix -> ~/.config/nixpkgs)?"
 rm -rf ~/.config/nixpkgs
 git clone git@git.sr.ht:~wuz/nix ~/.config/nixpkgs
-home-manager switch
-
-speak "Great! Nix is ready to go, now let's setup the Mac to be closer to linux"
-confirm "OK to pull the files we need (install linuxify)?"
-git clone https://github.com/fabiomaia/linuxify.git ~/linuxify
-cd ~/linuxify/
-./linuxify install
+darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin.nix
 
