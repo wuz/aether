@@ -1,57 +1,56 @@
 #!/bin/sh
 <<\EOF
+<head>
+  <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
+  <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="MobileOptimized" content="320"/>
+  <style>
+__SITECSS__
+  </style>
+</head>
+<body>
+  <h1>This website is a shell script</h1>
+  <p><a href="https://wuz.sh">I</a> use it to setup my dev machine</p>
+  <strong>Download and verify integrity with GnuPG:</strong>
+  <ol>
+    <li><p>Import my keys (you can verify <a href="https://keybase.io/wuz">keybase.io/wuz</a> as me by visiting the site!)</p>
+      <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
+    <li><p>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)</p>
+      <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
+      <code class="gpg">trust</code>
+    <li>
+      <p>At this point, you need to decide how much you trust me, represented from 1-5
+      You probably don't trust me ultimately - that should just be reserved for you.</p>
+      <p>If, after looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
+        You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a></p>
+      <code class="gpg"> 4</code></li>
+    </li>
+    <li>
+      <p>Recieve the keys from a keyserver</p>
+      <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
+    <li>
+      <p>Verify that this code is actually signed by me. Don't forget, `https` is really important here!</p>
+      <code> curl -sSL https://setup.wuz.sh | gpg -o setup.wuz.sh</code>
+
+      <strong>Don't pipe to `sh` here -
+      you don't know if the signature is valid
+      or what the source code is doing.</strong>
+    </li>
+    <li>
+      <strong>Inspect source code</strong>
+      <code> less setup.wuz.sh</code>
+    </li>
+    <li>
+      <strong>Run</strong>
+      <code> chmod +x setup.wuz.sh</code>
+      <code> ./setup.wuz.sh</code>
+    </li>
+  </ol>
+</body>
 <!--
-  Test
-  - -->
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
-      <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
-      <meta name="apple-mobile-web-app-capable" content="yes"/>
-      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-      <meta name="HandheldFriendly" content="true"/>
-      <meta name="MobileOptimized" content="320"/>
-      <style>
-      __SITECSS__
-      </style>
-    </head>
-    <body>
-      <article>
-        <h1>setup.wuz.sh</h1>
-        <strong>Download and verify integrity with GnuPG:</strong>
-        <ol>
-          <li>Import my keys (you can verify keybase.io/wuz as me by visiting the site!)
-            <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
-          <li>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)
-            <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
-            <code>trust</code>
-            <li>At this point, you need to decide how much you trust me, represented from 1-5
-              You probably don't trust me ultimately - that should just be reserved for you.
-              If, in looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
-              You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a>
-              <code> 4</code></li>
-          </li>
-          <li>Recieve the keys from a keyserver
-            <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
-          <li>Verify that this code is actually signed by me. Don't forget, `https` is really important here!
-            <code> curl https://setup.wuz.sh | gpg -o setup.wuz.sh</code></li>
-        </ol>
+  EOF
 
-        Don't pipe to `sh` in the previous step -
-        you don't know if the signature is valid
-        or what the source code is doing.
-
-        <strong>Inspect source code</strong>
-        <code> less setup.wuz.sh</code>
-
-        <strong>Run</strong>
-        <code> chmod +x setup.wuz.sh</code>
-        <code> ./setup.wuz.sh</code>
-      </article>
-    </body>
-  </html>
-  <!--
-    EOF
-
-    __SCRIPT__
+  __SCRIPT__

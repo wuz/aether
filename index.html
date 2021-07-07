@@ -3,58 +3,57 @@ Hash: SHA256
 
 #!/bin/sh
 <<\EOF
+<head>
+  <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
+  <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="MobileOptimized" content="320"/>
+  <style>
+*,*:before,*:after{box-sizing:border-box;} body{margin:0;padding:2em 4em;align-items:center;justify-content:center;background:rgb(245,245,245);color:rgb(4,13,17);font-family:Menlo,monospace;font-size:16px;max-width:60em;width:100vw;height:100vh;} a{color:#ff476e;} body * + *{margin-bottom:0.5em;} pre{text-align:left;line-height:1.1;} ol{padding:0;margin:0;} ol li + li{margin-bottom:1em;} code{margin:0.5em 0;padding:10px 5px;background:#f5c3d4;display:block;border-bottom:1px solid rgb(255,70,126);;text-align:left;border-radius:2px;} code:before{content:"$ ";color:#ff476e;} code.gpg:before{content:"> ";}   </style>
+</head>
+<body>
+  <h1>This website is a shell script</h1>
+  <p><a href="https://wuz.sh">I</a> use it to setup my dev machine</p>
+  <strong>Download and verify integrity with GnuPG:</strong>
+  <ol>
+    <li><p>Import my keys (you can verify <a href="https://keybase.io/wuz">keybase.io/wuz</a> as me by visiting the site!)</p>
+      <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
+    <li><p>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)</p>
+      <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
+      <code class="gpg">trust</code>
+    <li>
+      <p>At this point, you need to decide how much you trust me, represented from 1-5
+      You probably don't trust me ultimately - that should just be reserved for you.</p>
+      <p>If, after looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
+        You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a></p>
+      <code class="gpg"> 4</code></li>
+    </li>
+    <li>
+      <p>Recieve the keys from a keyserver</p>
+      <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
+    <li>
+      <p>Verify that this code is actually signed by me. Don't forget, `https` is really important here!</p>
+      <code> curl -sSL https://setup.wuz.sh | gpg -o setup.wuz.sh</code>
+
+      <strong>Don't pipe to `sh` here -
+      you don't know if the signature is valid
+      or what the source code is doing.</strong>
+    </li>
+    <li>
+      <strong>Inspect source code</strong>
+      <code> less setup.wuz.sh</code>
+    </li>
+    <li>
+      <strong>Run</strong>
+      <code> chmod +x setup.wuz.sh</code>
+      <code> ./setup.wuz.sh</code>
+    </li>
+  </ol>
+</body>
 <!--
-  Test
-  - -->
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>setup.wuz.sh - A setup script for my computer, way overengineered.</title>
-      <meta name="viewport" content="initial-scale = 1, maximum-scale=1, user-scalable = 0"/>
-      <meta name="apple-mobile-web-app-capable" content="yes"/>
-      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-      <meta name="HandheldFriendly" content="true"/>
-      <meta name="MobileOptimized" content="320"/>
-      <style>
-*,*:before,*:after{box-sizing:border-box;} html{background:#191b2a;color:#191b2a;font-family:monospace;font-size:16px;} *{text-indent:-9999px;} body{margin:0;padding:0;display:flex;align-items:center;justify-content:center;color:#eff0f6;overflow:hidden;width:100vw;height:100vh;top:0px;right:0px;display:flex;justify-content:center;align-items:center;} article{padding:30px 50px;max-height:100vh;height:100vh;max-width:600px;width:100%;overflow-y:auto;} article *{text-indent:0px;} a{color:#eff0f6;text-decoration:none;} article * + *{margin-bottom:0.5em;} pre{text-align:left;line-height:1.1;} ol{padding:0;margin:0;} ol li + li{margin-bottom:1em;} code{margin:0.5em 0;padding:10px 5px;background:#3c4367;display:block;border-bottom:1px solid #4f5987;text-align:left;border-radius:2px;} code:before{content:"$ ";color:#ff476e;}       </style>
-    </head>
-    <body>
-      <article>
-        <h1>setup.wuz.sh</h1>
-        <strong>Download and verify integrity with GnuPG:</strong>
-        <ol>
-          <li>Import my keys (you can verify keybase.io/wuz as me by visiting the site!)
-            <code>curl https://keybase.io/wuz/pgp_keys.asc | gpg --import</code></li>
-          <li>Open up GPG and let it know that you trust my keys (0xCAA69BFC5EF24C40 is my key)
-            <code>gpg --edit-key 0xCAA69BFC5EF24C40</code>
-            <code>trust</code>
-            <li>At this point, you need to decide how much you trust me, represented from 1-5
-              You probably don't trust me ultimately - that should just be reserved for you.
-              If, in looking at my keybase, you think I am pretty trustworthy, you can set my trust level to 4.
-              You can read more about what each trust level means <a href="https://www.gnupg.org/gph/en/manual/x334.html">here</a>
-              <code> 4</code></li>
-          </li>
-          <li>Recieve the keys from a keyserver
-            <code>gpg --recv-keys 0xCAA69BFC5EF24C40</code></li>
-          <li>Verify that this code is actually signed by me. Don't forget, `https` is really important here!
-            <code> curl https://setup.wuz.sh | gpg -o setup.wuz.sh</code></li>
-        </ol>
-
-        Don't pipe to `sh` in the previous step -
-        you don't know if the signature is valid
-        or what the source code is doing.
-
-        <strong>Inspect source code</strong>
-        <code> less setup.wuz.sh</code>
-
-        <strong>Run</strong>
-        <code> chmod +x setup.wuz.sh</code>
-        <code> ./setup.wuz.sh</code>
-      </article>
-    </body>
-  </html>
-  <!--
-    EOF
+  EOF
 
 #!/bin/bash
 
@@ -73,6 +72,7 @@ Hash: SHA256
 # The code is CC0[2] so feel free to rework and reuse as you see fit.
 # Extensively inspired and reworked from: https://github.com/nnja/new-computer
 
+dontask="False"
 
 ####################
 # Helper functions #
@@ -85,13 +85,10 @@ black=$(tput setaf 0)
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 yellow=$(tput setaf 3)
-blue=$(tput setaf 4)
-magenta=$(tput setaf 5)
+blue=$(tput setaf 4) magenta=$(tput setaf 5)
 cyan=$(tput setaf 6)
 white=$(tput setaf 7)
-
-# Resets the style
-reset=$(tput sgr0)
+reset=$(tput sgr0) # Resets the style
 
 show_spinner()
 {
@@ -132,364 +129,160 @@ cecho() {
   return
 }
 
-cask_install() {
-  while read -r PROGRAM
-  do
-    if [ -n "$PROGRAM" ]; then
-      [[ "$PROGRAM" =~ ^#.*$ ]] && continue
-      spinner brew cask install "$PROGRAM"
-    fi
-  done
-}
-
-brew_install() {
-  while read -r PROGRAM
-  do
-    if [ -n "$PROGRAM" ]; then
-      [[ "$PROGRAM" =~ ^#.*$ ]] && continue
-      spinner brew install "$PROGRAM"
-    fi
-  done
-}
-
-dot() {
-  src=$1
-  dest=$2
-  args=$3
-  regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
-  if [[ $src =~ $regex ]]
+# arg $1 = question
+# arg $2 = custom denied message
+confirm () {
+  if [[ $dontask = "True" ]]; then
+    return 1
+  fi
+  read -e -p "${white}[confirm] ${blue}${1} : (Y/N) > ${reset}" OK
+  if ! [[ "$OK" =~ ^([yY][eE][sS]|[yY])$ ]]
   then
-    curl -s "$src" > "$dest"
-  else
-    base=${3:-"git@github.com"}
-    git clone "$base:$src" "$dest" "$args"
+    if ! [[ "$OK" =~ ^([nN][oO]|[nN])$ ]]
+    then
+      confirm "$1"
+    else
+      if [[  $2 ]]
+      then
+        cecho "$2" $yellow
+      else
+        cecho "Ok! We'll stop here!" $yellow
+      fi
+      exit 0
+    fi
   fi
 }
 
-#echo ""
-#cecho "###############################################" "$red"
-#cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#---------------------------------------------#" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#        DON'T RUN CODE YOU FIND ON THE       #" "$red"
-#cecho "#      INTERNET WITHOUT READING IT FIRST      #" "$red"
-#cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#---------------------------------------------#" "$red"
-#cecho "#                                             #" "$red"
-#cecho "#          READ THIS CODE THOROUGHLY          #" "$red"
-#cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" "$red"
-#cecho "###############################################" "$red"
-#echo ""
+speak() {
+  if [[ $dontask = "True" ]]; then
+    return 1
+  fi
+  cecho "[◕ᴥ◕] > ${1}" $green
+}
 
-## Set continue to false by default.
-#CONTINUE=false
-
-#echo ""
-#cecho "Have you read through the script you're about to run and " "$blue"
-#cecho "understood that it will make changes to your computer? (y/n)" "$blue"
-#read -r response
-#if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-#  CONTINUE=true
-#fi
-
-#if ! $CONTINUE; then
-#  # Check if we're continuing and output a message if not
-#  cecho "Please go read the script, it only takes a few minutes" "$red"
-#  exit
-#fi
-
-## Here we go.. ask for the administrator password upfront and run a
-## keep-alive to update existing `sudo` time stamp until script has finished
-#sudo -v
-#while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
-##############################
-# Prerequisite: Install Brew #
-##############################
-
-echo "Installing brew..."
-
-if test ! "$(command -v brew)"
-then
-  ## Don't prompt for confirmation when installing homebrew
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
-fi
-
-# Update brew, install cask
-echo "Updating/Upgrading Brew"
-spinner brew upgrade 
-spinner brew update 
-
-#########################
-# Install brew packages #
-#########################
-
-echo "Installing brew packages..."
-
-brew_install << EOF
-
-  # Base tools
-  git
-  git-lfs
-  git-delta
-  tmux
-  tmuxinator
-  ssh-copy-id
-  neovim
-  wget
-  gnupg
-  shellcheck
-  todo-txt
-  thefuck
-  fzf
-
-  # Linux-style tools
-  coreutils
-  moreutils
-  findutils
-  gnu-sed
-  gnu-time
-  tree
-  rename
-
-  # Upgraded system tools
-  ripgrep
-  hub
-  hyperfine
-  exa
-  jq
-
-  # Languages
-  go
-  python
-  pyenv
-
-EOF
-
-#########################
-# Install cask packages #
-#########################
-
-echo "Installing cask packages..."
-
-spinner cask_install << EOF
-
-  # Productivity
-  notion
-  spotify
-  todotxt
-  firefox
-  muzzle
-  alfred
-
-  # Development
-  docker
-  visual-studio-code
-
-  # System Tools
-  keybase
-  bartender
-  tunnelblick
-  rectangle
-  owncloud
-  karabiner-elements
-
-  # Quicklook plugins
-  qlcolorcode
-  qlstephen
-  qlmarkdown
-  quicklook-json
-  epubquicklook
-  quicklook-csv
-
-  # Work Tools
-  slack
-  zoomus
-
-EOF
-
-####################
-# Install dotfiles # 
-####################
-
-spinner mkdir -p "$HOME/.config/nvim"
-spinner dot "~wuz/.files" "$HOME/.files"
-
-######################
-# Install asdf + langs
-######################
-
-dot asdf-vm/asdf.git "$HOME/.asdf" "--branch v0.7.7"
-
-######################
-# Install Python Tools
-######################
-
-echo "Installing global Python packages..."
-
-pip3 install --upgrade pip
-pip3 install --user pylint
-pip3 install --user flake8
-
-################
-# MacOS settings
-################
-
-# Allow cmd+Q to quit Finder
-defaults write com.apple.finder QuitMenuItem -bool true
-
-# Keep folders on top when sorting by name
-defaults write com.apple.finder _FXSortFoldersFirst -bool true
-
-# Expand save panel by default
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
-
-# Finder: show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-# Remove the auto-hiding Dock delay
-defaults write com.apple.dock autohide-delay -float 0
-
-# Automatically hide and show the Dock
-defaults write com.apple.dock autohide -bool true
-
-# Only Show Open Applications In The Dock  
-defaults write com.apple.dock static-only -bool true
-
-# Display full POSIX path as Finder window title
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-
-# Disable the warning when changing a file extension
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-# Automatically quit printer app once the print jobs complete
-defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
-
-# Disable the “Are you sure you want to open this application?” dialog
-defaults write com.apple.LaunchServices LSQuarantine -bool false
-
-# Avoid creating .DS_Store files on network or USB volumes
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
-
-# Use list view in all Finder windows by default
-# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
-
-# Minimize windows into their application’s icon
-defaults write com.apple.dock minimize-to-application -bool true
-
-# Menu bar: hide the Time Machine, User icons, but show the volume Icon.
-for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-	defaults write "${domain}" dontAutoLoad -array \
-		"/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-		"/System/Library/CoreServices/Menu Extras/User.menu"
+while getopts ":y" flag
+do
+  echo "${flag}"
+  case ${flag} in
+      y) dontask="True";;
+      \? )
+      echo "Invalid Option: -$OPTARG" 1>&2
+      exit 1
+      ;;
+  esac
 done
-defaults write com.apple.systemuiserver menuExtras -array \
-	"/System/Library/CoreServices/Menu Extras/Volume.menu" \
-	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-	"/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-	"/System/Library/CoreServices/Menu Extras/Battery.menu" \
-	"/System/Library/CoreServices/Menu Extras/Clock.menu"
+shift $((OPTIND -1))
 
-# Disable smart quotes and smart dashes
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-
-# Disable auto-correct
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-
-# Use function F1, F, etc keys as standard function keys
-defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
-
-
-# Require password immediately after sleep or screen saver begins"
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0
-
-# Save screenshots to a Screenshots folder
-mkdir "$HOME/Screenshots"
-defaults write com.apple.screencapture location -string "$HOME/Screenshots"
-
-# Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
-defaults write com.apple.screencapture type -string "png"
-
-# Hide Spotlight tray-icon (and subsequent helper)
-sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
-
-# Disable Spotlight indexing for any volume that gets mounted and has not yet
-# been indexed before.
-# Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-
-# Load new settings before rebuilding the index
-killall mds
-
-# Stop iTunes from responding to the keyboard media keys
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
-
-# Enable the automatic update check
-defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
-
-# Download newly available updates in background
-defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
-
-# Install System data files & security updates
-defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
-
-# Prevent Photos from opening automatically when devices are plugged in
-defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
-
-
-##############################
-# Setup Keybase and GPG Keys #
-##############################
-
-###########
-# Setup Vim
-###########
-
-# Install dien
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh ~/.cache/dein
-
-vim +"call :dein#install()" +qall
-
-echo ""
-cecho "Boom! All done!" "$cyan"
-echo ""
-echo ""
-cecho "################################################################################" "$white"
-echo ""
-echo ""
-cecho "Note that some of these changes require a logout/restart to take effect." "$red"
-echo ""
-echo ""
-echo -n "Check for and install available OSX updates, install, and automatically restart? (y/n)? "
-read -r response
-if [ "$response" != "${response#[Yy]}" ] ;then
-    softwareupdate -i -a --restart
+if [[ $dontask = "True" ]]; then
+  cecho "Running with -y, ignoring interactive installation" $red
 fi
-exit 0
 
-# [1] - https://wuz.sh
-# [2] - https://creativecommons.org/share-your-work/public-domain/cc0/
+echo ""
+cecho "###############################################" "$red"
+cecho "#        THIS IS CURRENTLY ONLY FOR MAC       #" "$red"
+cecho "#                                             #" "$red"
+cecho "#---------------------------------------------#" "$red"
+cecho "#                                             #" "$red"
+cecho "#        DON'T RUN CODE YOU FIND ON THE       #" "$red"
+cecho "#      INTERNET WITHOUT READING IT FIRST      #" "$red"
+cecho "#        YOU'LL EVENTUALLY REGRET IT...       #" "$red"
+cecho "#                                             #" "$red"
+cecho "#---------------------------------------------#" "$red"
+cecho "#                                             #" "$red"
+cecho "#          READ THIS CODE THOROUGHLY          #" "$red"
+cecho "#         AND EDIT TO SUIT YOUR NEEDS         #" "$red"
+cecho "###############################################" "$red"
+echo ""
+
+cecho "__________________________________________" "$yellow"
+cecho "| It looks like you're trying to set up a |" "$yellow"
+cecho "| new computer...                         |" "$yellow"
+cecho "------------------------------------------" "$yellow"
+cecho " \\" "$yellow"
+cecho "  \\" "$yellow"
+cecho "     __" "$yellow"
+cecho "    /  \\" "$yellow"
+cecho "    |  |" "$yellow"
+cecho "    @  @" "$yellow"
+cecho "    |  |" "$yellow"
+cecho "    || |/" "$yellow"
+cecho "    || ||" "$yellow"
+cecho "    |\_/|" "$yellow"
+cecho "    \___/" "$yellow"
+
+speak "Just kidding. I'm your friendly installer script!"
+speak "This script is interactive! Before doing anything, we'll make sure to ask if it's ok, like this:"
+confirm "Is it ok to get started?"
+speak "Perfect! Let's do this!"
+
+speak "First things first, have you read over the script? Definitely don't run something from the web without reading it first!"
+confirm "Have you read over the script?" "Go check it out and then run this again!"
+
+speak "Alright, now we need sudo to keep this thing running. We'll ask for your password now, ok?"
+confirm "OK to ask for sudo?"
+## Here we go.. ask for the administrator password upfront
+sudo -v
+## Run a keep-alive to update existing `sudo` time stamp until script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+speak "This script runs primarily on nix. Can we install Nix now?"
+confirm "OK to install Nix and setup the needed directories, files, and nix channels?"
+# curl -L https://nixos.org/nix/install | sh
+mkdir -p ~/.config/nix/ ~/.config/nixpkgs/
+echo 'max-jobs = auto' >>~/.config/nix/nix.conf
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
+nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --add https://github.com/kwbauson/cfg/archive/main.tar.gz kwbauson-cfg
+nix-channel --update
+nix-shell '<home-manager>' -A install
+rm -rf ./result
+
+speak "Cool, let's set up xcode tools so that we have access to git."
+confirm "OK to install xcode tools (xcode-select --install)?"
+xcode-select --install
+if [ $? -eq 0 ]; then
+sleep 1
+osascript <<EOF
+  tell application "System Events"
+    tell process "Install Command Line Developer Tools"
+      keystroke return
+      click button "Agree" of window "License Agreement"
+    end tell
+  end tell
+EOF
+fi
+
+speak "Once that is done installing, press any key to continue!"
+while [ true ] ; do
+  read -t 3 -n 1
+  if [ $? = 0 ] ; then
+    break;
+  else
+    speak "Waiting for the keypress "
+  fi
+done
+
+speak "Alright! Nix is installed and setup with what we need! Now let's pull down the nix config files and install everything!."
+confirm "OK to pull the files we need (git.sr.ht/~wuz/nix -> ~/.config/nixpkgs)?"
+rm -rf ~/.config/nixpkgs
+git clone git@git.sr.ht:~wuz/nix ~/.config/nixpkgs
+darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin.nix
+
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAl6nSwIACgkQyqab/F7y
-TEAD8RAAzvC2YBDBJa+q+TBmLczvn2epDjmGpw/XARjdyqYjw1Z8eCEXJimY9/kf
-Scy7A6K/YABJNDGGc+sVzEOM+6mvlXQD6ZQorBHFvGRLfF5l+gWf44ITclJ/gTsZ
-CBrnIeeAxH9Lz/Ryb5Lzdc2GAO2z6VpDWgOcvjudD1tfJ2HG7v5gwDM2AVzbAtOk
-OvWcycLTR7J/KurM6tPnNWIAEg8/2zYB/xz02SUsRe5ivJ/SoitIqTYdoZ3+yAOI
-ZvcqNcEYgVulClpI31dQITnHBHTQAWw6pHDiJLA/9hHRkR3Xd0eb2ycg2KnUySIJ
-jT14dWAJdP3cLHRRtM4TKBtRbCdm7YaDIjqFBnzuU2icRKWMC7p2rdqt/Q7b3BeP
-d4htVz21Y8BErZV3zx/B2TVPbuh1DlFDADWy8DDDCW2JOUVLDIUZSgkthn5aVXhw
-B5bAOy6+H2nB4ALVgJeH1mKNl8rgxXy4pDAY8bV9ZW/jXeHQ+VxUk/OT78ePj3A7
-shltDA+Mrt8DMpBGGs4Y/d+cUNlJOKyGk4AK8JJFdaft7qNTSR/shGlTEzdiesQF
-H8noOb+2KXs8GRj75qmwE1eRCpb84o6tT++hgj7SXinoiRS/zy1jGLjhVf3IIgYs
-3LjYupFaT7x+a3JeMiuMLox5Cx08TwEqdY7gyk/M5KAitjtnwRM=
-=xwPo
+iQIzBAEBCAAdFiEEf0+WKJ8uCVZxOxjcyqab/F7yTEAFAmDl2wYACgkQyqab/F7y
+TEDCZQ//dWSFtU+t+vcaCh6T/YIraxZBHt51K9rr+neNQFmVz3Vycm20+LbN9KoL
+Gtxt/q6RMevPcZqqKbPD3qBCZG985jcZvC7l4xmmgdTybgfbZ8mB6tcyIGxXS0LJ
+ntgDwf7MSAaTqP74jF2nv8wNZjLKq0gTQ8sQRbERHF8G0P/oxvekgkvlG0A7/rrh
+x95TSO+2UB7D5R/v5ssxwqJu9XOBdfTnmITN0GFttm0GcjzS0DkiumNXz6TTANi0
+5eizGogkgvENSZ5mkv+E2vtRWUnfPSdJTD2K+vwaian4wJ2SQt8p0FrQQXSnn4ic
+GVsPnmuoytpmqI3sgWPdH5P6II/CySW8eOhSMQOiOD6IBDEoK2AGel+54HRRtlvR
+bP3oiyZ0DFhpFEGQk3LnPZPj2Fgz/nJV2ePZ3dQikN0L4BhWnbD6GpO6Whk8ZWtW
+ip9HIEZ5sU6NVB4hB/J/E/2ORB9nnEDDQa0hLQNUk7W2z02FWE7CuQgF6e1aqz4X
+/Z338pLoByS9j5dwxjXcwK0E8LD/sj7KR42QwIAmMmfx/O9FM1YHtXqYunT20vWk
+h/QnHfktRNTsMXbyF2n8eTi+z5gKx/z5TvZNAYsiObY4O8oepHCNYo0HSbfzF2Co
+dJkO5KAd7RhezEQnkc9Wt0aFKZmHGn2auJPLljsACzrVSUDyXwM=
+=navm
 -----END PGP SIGNATURE-----
