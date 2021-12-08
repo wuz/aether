@@ -1,6 +1,8 @@
-# setup.wuz.fyi
+# aether
 
 A setup script for my computer, way overengineered.
+
+> Note: Lots of in progress work here. Use at you own risk.
 
 ## How to build:
 
